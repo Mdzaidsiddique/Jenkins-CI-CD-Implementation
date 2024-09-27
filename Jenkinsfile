@@ -1,16 +1,11 @@
 pipeline {
-    agent any  // Runs on any available Jenkins agent
-
-    environment {
-        // Define environment variables, if necessary
-        NODE_ENV = 'production'
-    }
+    agent any
 
     stages {
         // 1. Checkout Stage (CI)
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-repo.git'
+                git branch: 'main', url: 'https://github.com/Mdzaidsiddique/Jenkins-CI-CD-Implementation.git'
             }
         }
 
@@ -18,8 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Define your build process here (e.g., npm install, maven build)
-                    sh 'npm install'
+                    echo "building .."
                 }
             }
         }
@@ -28,8 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Run tests to ensure quality (e.g., unit tests, integration tests)
-                    sh 'npm test'
+                    echo "testing.."
                 }
             }
         }
@@ -38,8 +31,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy to a server, Kubernetes, or a cloud service (e.g., Docker container, SSH to server)
-                    sh 'npm run deploy'
+                    echo "deploying.."
                 }
             }
         }
@@ -48,7 +40,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up workspace...'
-            cleanWs()  // Cleans up the workspace
+            cleanWs()
         }
         success {
             echo 'Build and deployment were successful!'
